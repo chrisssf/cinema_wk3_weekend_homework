@@ -29,7 +29,7 @@ class Customer
   def self.all()
     sql = "SELECT * FROM customers"
     customer_data = SqlRunner.run(sql)
-    return map_customer(customer_data)
+    return map_customers(customer_data)
   end
 
   def update()
@@ -53,7 +53,7 @@ class Customer
     return Film.map_films(films_data)
   end
 
-  def self.map_customer(customer_data)
+  def self.map_customers(customer_data)
     return customer_data.map{|customer_hash| Customer.new(customer_hash)}
   end
 end
