@@ -1,5 +1,6 @@
 require_relative('../db/sql_runner')
 require_relative('./customer')
+require_relative('./tickets')
 
 
 class Film
@@ -54,7 +55,22 @@ class Film
     values = [@id]
     customer_data = SqlRunner.run(sql, values)
     return Customer.map_customers(customer_data)
+  end
 
+  def buy_ticket(customer)
+
+    new_ticket = Ticket.new({
+      "customer_id" => customer.id,
+      "film_id" => @id
+      })
+
+    new_ticket.save()
+
+    sql_get_price = "SELECT price FROM films WHERE title = $1"
+    values = [@title]
+    price = SqlRunner.run(sql_get_price, values)[0]['price'].to_i
+    customer.funds -= price
+    customer.update()
   end
 
   def self.map_films(film_data)

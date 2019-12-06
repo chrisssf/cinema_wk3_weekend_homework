@@ -39,4 +39,13 @@ class Ticket
     return ticket_data.map{|ticket_hash| Ticket.new(ticket_hash)}
   end
 
+  # def buy_ticket(customer)
+  #   # get price
+  #   # decrease funds in ruby
+  #   # update database
+  #   sql_get_price = "SELECT price FROM films WHERE title = $1"
+  #   values = [@]
+  #
+  # end
+
 end
