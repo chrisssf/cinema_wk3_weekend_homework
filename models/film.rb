@@ -28,6 +28,12 @@ class Film
     SqlRunner.run(sql)
   end
 
+  def self.all()
+    sql = "SELECT * FROM films;"
+    film_data = SqlRunner.run(sql)
+    return map_films(film_data)
+  end
+
   def update()
     sql = "UPDATE films SET (title, price) = ($1, $2) WHERE id = $3"
     values = [@title, @price, @id]
@@ -39,4 +45,9 @@ class Film
     values = [@id]
     SqlRunner.run(sql, values)
   end
+
+  def self.map_films(film_data)
+    return film_data.map{|film_hash| Film.new(film_hash)}
+  end
+
 end
