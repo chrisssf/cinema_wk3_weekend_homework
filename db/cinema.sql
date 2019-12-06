@@ -15,6 +15,7 @@ CREATE TABLE customers (
 );
 
 CREATE TABLE tickets (
+  id SERIAL PRIMARY KEY,
   customer_id INT,
   film_id INT
 );
