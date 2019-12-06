@@ -57,8 +57,12 @@ class Film
     return Customer.map_customers(customer_data)
   end
 
-  def buy_ticket(customer)
+  def number_of_customers()
+    number_of_customers = self.customers().count
+    return "#{number_of_customers} customers are going to watch #{@title}"
+  end
 
+  def buy_ticket(customer)
     new_ticket = Ticket.new({
       "customer_id" => customer.id,
       "film_id" => @id

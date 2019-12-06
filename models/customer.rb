@@ -53,6 +53,13 @@ class Customer
     return Film.map_films(films_data)
   end
 
+  def tickets
+    sql = "SELECT * FROM tickets WHERE customer_id = $1;"
+    values = [@id]
+    number_of_tickets = SqlRunner.run(sql, values).count
+    return "#{@name} has bought #{number_of_tickets} tickets"
+  end
+
   def self.map_customers(customer_data)
     return customer_data.map{|customer_hash| Customer.new(customer_hash)}
   end
