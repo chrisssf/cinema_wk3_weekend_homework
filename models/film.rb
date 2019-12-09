@@ -120,7 +120,7 @@ class Film
     return Screening.map_screenings(screening_data)
   end
 
-  def tickets
+  def most_popular_screening
     sql = "SELECT tickets.*, screenings.* FROM tickets
           INNER JOIN screenings ON screenings.id = tickets.screening_id
           WHERE tickets.film_id = $1;"
