@@ -1,4 +1,5 @@
 require_relative('./film')
+require_relative('../db/sql_runner')
 
 class Customer
 
@@ -6,9 +7,18 @@ class Customer
   attr_accessor :name, :funds
 
   def initialize(options)
-    @id = options["id"] if options["id"]
+    @id = options["id"].to_i if options["id"]
     @name = options["name"]
     @funds = options["funds"]
+  end
+
+  def self.create_new_customer(name, funds)
+    new_customer = Customer.new({
+      "name" => name,
+      "funds" => funds
+      })
+    new_customer.save()
+    return new_customer
   end
 
   def save()

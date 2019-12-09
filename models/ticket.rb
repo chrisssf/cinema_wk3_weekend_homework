@@ -3,19 +3,21 @@ class Ticket
   attr_reader :id, :customer_id, :film_id
 
   def initialize(options)
-    @id = options["id"] if options["id"]
-    @customer_id = options["customer_id"]
-    @film_id = options["film_id"]
+    @id = options["id"].to_i if options["id"]
+    @customer_id = options["customer_id"].to_i
+    @film_id = options["film_id"].to_i
+    @screening_id = options["screening_id"].to_i
   end
 
   def save()
     sql = "INSERT INTO tickets (
     customer_id,
-    film_id
-    ) VALUES ($1, $2)
+    film_id,
+    screening_id
+    ) VALUES ($1, $2, $3)
     RETURNING id;"
-    values = [@customer_id, @film_id]
-    @id = SqlRunner.run(sql, values)[0]["id"]
+    values = [@customer_id, @film_id, @screening_id]
+    @id = SqlRunner.run(sql, values)[0]["id"].to_i
   end
 
   def self.delete_all()
@@ -38,14 +40,5 @@ class Ticket
   def self.map_ticket(ticket_data)
     return ticket_data.map{|ticket_hash| Ticket.new(ticket_hash)}
   end
-
-  # def buy_ticket(customer)
-  #   # get price
-  #   # decrease funds in ruby
-  #   # update database
-  #   sql_get_price = "SELECT price FROM films WHERE title = $1"
-  #   values = [@]
-  #
-  # end
 
 end
